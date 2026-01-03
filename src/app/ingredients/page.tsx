@@ -27,6 +27,26 @@ interface Ingredient {
   priceHistory: PriceHistory[];
 }
 
+// 헬퍼 함수: 1달 가격 히스토리 생성
+function generatePriceHistory(
+  startPrice: number,
+  endPrice: number
+): PriceHistory[] {
+  const history: PriceHistory[] = [];
+  const days = 30;
+  const priceChange = (endPrice - startPrice) / days;
+
+  for (let i = 0; i <= days; i += 3) {
+    const date = new Date();
+    date.setDate(date.getDate() - (30 - i));
+    const dateStr = `${date.getMonth() + 1}/${date.getDate()}`;
+    const price = Math.round(startPrice + priceChange * i + (Math.random() - 0.5) * 200);
+    history.push({ date: dateStr, price });
+  }
+
+  return history;
+}
+
 const sampleIngredients: Ingredient[] = [
   {
     id: "1",
@@ -35,14 +55,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "1kg",
     category: "채소",
     priceChange: -5.2,
-    priceHistory: [
-      { date: "12-20", price: 2300 },
-      { date: "12-23", price: 2200 },
-      { date: "12-26", price: 2100 },
-      { date: "12-29", price: 2050 },
-      { date: "01-01", price: 2000 },
-      { date: "01-03", price: 2000 },
-    ],
+    priceHistory: generatePriceHistory(2300, 2000),
   },
   {
     id: "2",
@@ -51,62 +64,367 @@ const sampleIngredients: Ingredient[] = [
     unit: "1kg",
     category: "채소",
     priceChange: 6.7,
-    priceHistory: [
-      { date: "12-20", price: 3000 },
-      { date: "12-23", price: 3050 },
-      { date: "12-26", price: 3100 },
-      { date: "12-29", price: 3150 },
-      { date: "01-01", price: 3200 },
-      { date: "01-03", price: 3200 },
-    ],
+    priceHistory: generatePriceHistory(3000, 3200),
   },
   {
     id: "3",
-    name: "계란",
-    currentPrice: 5000,
-    unit: "10개",
-    category: "유제품",
-    priceChange: 0,
-    priceHistory: [
-      { date: "12-20", price: 5000 },
-      { date: "12-23", price: 5000 },
-      { date: "12-26", price: 5000 },
-      { date: "12-29", price: 5000 },
-      { date: "01-01", price: 5000 },
-      { date: "01-03", price: 5000 },
-    ],
-  },
-  {
-    id: "4",
     name: "대파",
     currentPrice: 4500,
     unit: "1단",
     category: "채소",
     priceChange: -10.0,
-    priceHistory: [
-      { date: "12-20", price: 5000 },
-      { date: "12-23", price: 4900 },
-      { date: "12-26", price: 4800 },
-      { date: "12-29", price: 4600 },
-      { date: "01-01", price: 4500 },
-      { date: "01-03", price: 4500 },
-    ],
+    priceHistory: generatePriceHistory(5000, 4500),
   },
   {
-    id: "5",
+    id: "4",
     name: "감자",
     currentPrice: 2800,
     unit: "1kg",
     category: "채소",
     priceChange: 3.7,
-    priceHistory: [
-      { date: "12-20", price: 2700 },
-      { date: "12-23", price: 2720 },
-      { date: "12-26", price: 2750 },
-      { date: "12-29", price: 2780 },
-      { date: "01-01", price: 2800 },
-      { date: "01-03", price: 2800 },
-    ],
+    priceHistory: generatePriceHistory(2700, 2800),
+  },
+  {
+    id: "5",
+    name: "호박",
+    currentPrice: 3500,
+    unit: "1개",
+    category: "채소",
+    priceChange: 2.9,
+    priceHistory: generatePriceHistory(3400, 3500),
+  },
+  {
+    id: "6",
+    name: "시금치",
+    currentPrice: 2500,
+    unit: "1단",
+    category: "채소",
+    priceChange: -3.8,
+    priceHistory: generatePriceHistory(2600, 2500),
+  },
+  {
+    id: "7",
+    name: "콩나물",
+    currentPrice: 1500,
+    unit: "1봉",
+    category: "채소",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(1500, 1500),
+  },
+  {
+    id: "8",
+    name: "청양고추",
+    currentPrice: 3000,
+    unit: "100g",
+    category: "채소",
+    priceChange: 15.4,
+    priceHistory: generatePriceHistory(2600, 3000),
+  },
+  {
+    id: "9",
+    name: "상추",
+    currentPrice: 2200,
+    unit: "1단",
+    category: "채소",
+    priceChange: -8.3,
+    priceHistory: generatePriceHistory(2400, 2200),
+  },
+  {
+    id: "10",
+    name: "깻잎",
+    currentPrice: 3000,
+    unit: "20장",
+    category: "채소",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(3000, 3000),
+  },
+  {
+    id: "11",
+    name: "계란",
+    currentPrice: 5000,
+    unit: "10개",
+    category: "유제품",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(5000, 5000),
+  },
+  {
+    id: "12",
+    name: "두부",
+    currentPrice: 2000,
+    unit: "1모",
+    category: "유제품",
+    priceChange: -2.4,
+    priceHistory: generatePriceHistory(2050, 2000),
+  },
+  {
+    id: "13",
+    name: "순두부",
+    currentPrice: 2500,
+    unit: "1팩",
+    category: "유제품",
+    priceChange: 4.2,
+    priceHistory: generatePriceHistory(2400, 2500),
+  },
+  {
+    id: "14",
+    name: "소고기",
+    currentPrice: 15000,
+    unit: "500g",
+    category: "육류",
+    priceChange: 8.7,
+    priceHistory: generatePriceHistory(13800, 15000),
+  },
+  {
+    id: "15",
+    name: "돼지고기",
+    currentPrice: 8000,
+    unit: "500g",
+    category: "육류",
+    priceChange: 3.9,
+    priceHistory: generatePriceHistory(7700, 8000),
+  },
+  {
+    id: "16",
+    name: "삼겹살",
+    currentPrice: 12000,
+    unit: "500g",
+    category: "육류",
+    priceChange: 9.1,
+    priceHistory: generatePriceHistory(11000, 12000),
+  },
+  {
+    id: "17",
+    name: "닭고기",
+    currentPrice: 6000,
+    unit: "500g",
+    category: "육류",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(6000, 6000),
+  },
+  {
+    id: "18",
+    name: "갈비",
+    currentPrice: 18000,
+    unit: "500g",
+    category: "육류",
+    priceChange: 5.9,
+    priceHistory: generatePriceHistory(17000, 18000),
+  },
+  {
+    id: "19",
+    name: "김치",
+    currentPrice: 8000,
+    unit: "1kg",
+    category: "반찬",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(8000, 8000),
+  },
+  {
+    id: "20",
+    name: "김",
+    currentPrice: 3000,
+    unit: "10장",
+    category: "반찬",
+    priceChange: -5.0,
+    priceHistory: generatePriceHistory(3150, 3000),
+  },
+  {
+    id: "21",
+    name: "간장",
+    currentPrice: 5000,
+    unit: "500ml",
+    category: "조미료",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(5000, 5000),
+  },
+  {
+    id: "22",
+    name: "고추장",
+    currentPrice: 6000,
+    unit: "500g",
+    category: "조미료",
+    priceChange: 2.0,
+    priceHistory: generatePriceHistory(5900, 6000),
+  },
+  {
+    id: "23",
+    name: "된장",
+    currentPrice: 5500,
+    unit: "500g",
+    category: "조미료",
+    priceChange: 1.9,
+    priceHistory: generatePriceHistory(5400, 5500),
+  },
+  {
+    id: "24",
+    name: "고춧가루",
+    currentPrice: 8000,
+    unit: "500g",
+    category: "조미료",
+    priceChange: 14.3,
+    priceHistory: generatePriceHistory(7000, 8000),
+  },
+  {
+    id: "25",
+    name: "참기름",
+    currentPrice: 7000,
+    unit: "250ml",
+    category: "조미료",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(7000, 7000),
+  },
+  {
+    id: "26",
+    name: "설탕",
+    currentPrice: 3000,
+    unit: "1kg",
+    category: "조미료",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(3000, 3000),
+  },
+  {
+    id: "27",
+    name: "마늘",
+    currentPrice: 4000,
+    unit: "500g",
+    category: "조미료",
+    priceChange: 11.1,
+    priceHistory: generatePriceHistory(3600, 4000),
+  },
+  {
+    id: "28",
+    name: "생강",
+    currentPrice: 5000,
+    unit: "500g",
+    category: "조미료",
+    priceChange: -6.5,
+    priceHistory: generatePriceHistory(5350, 5000),
+  },
+  {
+    id: "29",
+    name: "쌈장",
+    currentPrice: 4000,
+    unit: "500g",
+    category: "조미료",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(4000, 4000),
+  },
+  {
+    id: "30",
+    name: "새우젓",
+    currentPrice: 5000,
+    unit: "300g",
+    category: "조미료",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(5000, 5000),
+  },
+  {
+    id: "31",
+    name: "국간장",
+    currentPrice: 4500,
+    unit: "500ml",
+    category: "조미료",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(4500, 4500),
+  },
+  {
+    id: "32",
+    name: "밥",
+    currentPrice: 10000,
+    unit: "5kg",
+    category: "곡물",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(10000, 10000),
+  },
+  {
+    id: "33",
+    name: "당면",
+    currentPrice: 3000,
+    unit: "500g",
+    category: "곡물",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(3000, 3000),
+  },
+  {
+    id: "34",
+    name: "떡",
+    currentPrice: 5000,
+    unit: "500g",
+    category: "곡물",
+    priceChange: 4.2,
+    priceHistory: generatePriceHistory(4800, 5000),
+  },
+  {
+    id: "35",
+    name: "표고버섯",
+    currentPrice: 4000,
+    unit: "200g",
+    category: "채소",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(4000, 4000),
+  },
+  {
+    id: "36",
+    name: "고사리",
+    currentPrice: 6000,
+    unit: "200g",
+    category: "채소",
+    priceChange: 9.1,
+    priceHistory: generatePriceHistory(5500, 6000),
+  },
+  {
+    id: "37",
+    name: "어묵",
+    currentPrice: 3500,
+    unit: "300g",
+    category: "가공식품",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(3500, 3500),
+  },
+  {
+    id: "38",
+    name: "조개",
+    currentPrice: 7000,
+    unit: "300g",
+    category: "해산물",
+    priceChange: -4.1,
+    priceHistory: generatePriceHistory(7300, 7000),
+  },
+  {
+    id: "39",
+    name: "미역",
+    currentPrice: 5000,
+    unit: "100g",
+    category: "해산물",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(5000, 5000),
+  },
+  {
+    id: "40",
+    name: "멸치",
+    currentPrice: 8000,
+    unit: "200g",
+    category: "해산물",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(8000, 8000),
+  },
+  {
+    id: "41",
+    name: "대추",
+    currentPrice: 6000,
+    unit: "200g",
+    category: "과일",
+    priceChange: 0,
+    priceHistory: generatePriceHistory(6000, 6000),
+  },
+  {
+    id: "42",
+    name: "밤",
+    currentPrice: 8000,
+    unit: "500g",
+    category: "과일",
+    priceChange: -5.9,
+    priceHistory: generatePriceHistory(8500, 8000),
   },
 ];
 
@@ -144,7 +462,7 @@ export default function IngredientsPage() {
                 </div>
               </div>
 
-              <div className="divide-y divide-gray-200 dark:divide-gray-700 max-h-[600px] overflow-y-auto">
+              <div className="divide-y divide-gray-200 dark:divide-gray-700 max-h-[700px] overflow-y-auto">
                 {filteredIngredients.map((ingredient) => (
                   <div
                     key={ingredient.id}
@@ -236,6 +554,9 @@ export default function IngredientsPage() {
                     </div>
                   </div>
                 </div>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  최근 30일 가격 추이
+                </p>
               </div>
 
               <div className="h-[400px]">
