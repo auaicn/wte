@@ -18,8 +18,9 @@ export default function Navigation() {
     <nav className="bg-white dark:bg-gray-800 shadow-md">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white">
-            WTE
+          <Link href="/" className="flex flex-col">
+            <span className="text-xl font-bold text-gray-900 dark:text-white">WTE</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">what to eat</span>
           </Link>
 
           <div className="flex space-x-1">

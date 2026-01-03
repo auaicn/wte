@@ -17,14 +17,21 @@ interface PriceHistory {
   price: number;
 }
 
+interface UnitConversion {
+  amount: number;
+  unit: string;
+}
+
 interface Ingredient {
   id: string;
   name: string;
+  nameEn: string;
   currentPrice: number;
   unit: string;
   category: string;
   priceChange: number;
   priceHistory: PriceHistory[];
+  conversions?: UnitConversion[];
 }
 
 // 헬퍼 함수: 1달 가격 히스토리 생성
@@ -59,42 +66,65 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "1",
     name: "양파",
+    nameEn: "Onion",
     currentPrice: 2000,
     unit: "1kg",
     category: "채소",
     priceChange: -5.2,
     priceHistory: generatePriceHistory(2300, 2000, 1),
+    conversions: [
+      { amount: 3, unit: "큰 사이즈" },
+      { amount: 5, unit: "중간 사이즈" },
+      { amount: 8, unit: "작은 사이즈" },
+    ],
   },
   {
     id: "2",
     name: "당근",
+    nameEn: "Carrot",
     currentPrice: 3200,
     unit: "1kg",
     category: "채소",
     priceChange: 6.7,
     priceHistory: generatePriceHistory(3000, 3200, 2),
+    conversions: [
+      { amount: 4, unit: "큰 사이즈" },
+      { amount: 6, unit: "중간 사이즈" },
+      { amount: 10, unit: "작은 사이즈" },
+    ],
   },
   {
     id: "3",
     name: "대파",
+    nameEn: "Green Onion",
     currentPrice: 4500,
     unit: "1단",
     category: "채소",
     priceChange: -10.0,
     priceHistory: generatePriceHistory(5000, 4500, 3),
+    conversions: [
+      { amount: 8, unit: "개" },
+    ],
   },
   {
     id: "4",
     name: "감자",
+    nameEn: "Potato",
     currentPrice: 2800,
     unit: "1kg",
     category: "채소",
     priceChange: 3.7,
     priceHistory: generatePriceHistory(2700, 2800, 4),
+    conversions: [
+      { amount: 4, unit: "큰 사이즈" },
+      { amount: 6, unit: "중간 사이즈" },
+      { amount: 10, unit: "작은 사이즈" },
+    ],
   },
   {
     id: "5",
     name: "호박",
+    nameEn: "Zucchini",
     currentPrice: 3500,
     unit: "1개",
     category: "채소",
@@ -104,6 +134,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "6",
     name: "시금치",
+    nameEn: "Spinach",
     currentPrice: 2500,
     unit: "1단",
     category: "채소",
@@ -113,6 +144,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "7",
     name: "콩나물",
+    nameEn: "Bean Sprouts",
     currentPrice: 1500,
     unit: "1봉",
     category: "채소",
@@ -122,6 +154,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "8",
     name: "청양고추",
+    nameEn: "Cheongyang Chili",
     currentPrice: 3000,
     unit: "100g",
     category: "채소",
@@ -131,6 +164,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "9",
     name: "상추",
+    nameEn: "Lettuce",
     currentPrice: 2200,
     unit: "1단",
     category: "채소",
@@ -140,6 +174,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "10",
     name: "깻잎",
+    nameEn: "Perilla Leaves",
     currentPrice: 3000,
     unit: "20장",
     category: "채소",
@@ -149,6 +184,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "11",
     name: "계란",
+    nameEn: "Egg",
     currentPrice: 5000,
     unit: "10개",
     category: "유제품",
@@ -158,6 +194,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "12",
     name: "두부",
+    nameEn: "Tofu",
     currentPrice: 2000,
     unit: "1모",
     category: "유제품",
@@ -167,6 +204,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "13",
     name: "순두부",
+    nameEn: "Soft Tofu",
     currentPrice: 2500,
     unit: "1팩",
     category: "유제품",
@@ -176,6 +214,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "14",
     name: "소고기",
+    nameEn: "Beef",
     currentPrice: 15000,
     unit: "500g",
     category: "육류",
@@ -185,6 +224,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "15",
     name: "돼지고기",
+    nameEn: "Pork",
     currentPrice: 8000,
     unit: "500g",
     category: "육류",
@@ -194,6 +234,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "16",
     name: "삼겹살",
+    nameEn: "Pork Belly",
     currentPrice: 12000,
     unit: "500g",
     category: "육류",
@@ -203,6 +244,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "17",
     name: "닭고기",
+    nameEn: "Chicken",
     currentPrice: 6000,
     unit: "500g",
     category: "육류",
@@ -212,6 +254,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "18",
     name: "갈비",
+    nameEn: "Galbi",
     currentPrice: 18000,
     unit: "500g",
     category: "육류",
@@ -221,6 +264,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "19",
     name: "김치",
+    nameEn: "Kimchi",
     currentPrice: 8000,
     unit: "1kg",
     category: "반찬",
@@ -230,6 +274,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "20",
     name: "김",
+    nameEn: "Seaweed",
     currentPrice: 3000,
     unit: "10장",
     category: "반찬",
@@ -239,6 +284,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "21",
     name: "간장",
+    nameEn: "Soy Sauce",
     currentPrice: 5000,
     unit: "500ml",
     category: "조미료",
@@ -248,6 +294,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "22",
     name: "고추장",
+    nameEn: "Gochujang",
     currentPrice: 6000,
     unit: "500g",
     category: "조미료",
@@ -257,6 +304,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "23",
     name: "된장",
+    nameEn: "Doenjang",
     currentPrice: 5500,
     unit: "500g",
     category: "조미료",
@@ -266,6 +314,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "24",
     name: "고춧가루",
+    nameEn: "Chili Powder",
     currentPrice: 8000,
     unit: "500g",
     category: "조미료",
@@ -275,6 +324,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "25",
     name: "참기름",
+    nameEn: "Sesame Oil",
     currentPrice: 7000,
     unit: "250ml",
     category: "조미료",
@@ -284,6 +334,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "26",
     name: "설탕",
+    nameEn: "Sugar",
     currentPrice: 3000,
     unit: "1kg",
     category: "조미료",
@@ -293,6 +344,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "27",
     name: "마늘",
+    nameEn: "Garlic",
     currentPrice: 4000,
     unit: "500g",
     category: "조미료",
@@ -302,6 +354,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "28",
     name: "생강",
+    nameEn: "Ginger",
     currentPrice: 5000,
     unit: "500g",
     category: "조미료",
@@ -311,6 +364,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "29",
     name: "쌈장",
+    nameEn: "Ssamjang",
     currentPrice: 4000,
     unit: "500g",
     category: "조미료",
@@ -320,6 +374,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "30",
     name: "새우젓",
+    nameEn: "Salted Shrimp",
     currentPrice: 5000,
     unit: "300g",
     category: "조미료",
@@ -329,6 +384,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "31",
     name: "국간장",
+    nameEn: "Soup Soy Sauce",
     currentPrice: 4500,
     unit: "500ml",
     category: "조미료",
@@ -338,6 +394,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "32",
     name: "밥",
+    nameEn: "Rice",
     currentPrice: 10000,
     unit: "5kg",
     category: "곡물",
@@ -347,6 +404,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "33",
     name: "당면",
+    nameEn: "Glass Noodles",
     currentPrice: 3000,
     unit: "500g",
     category: "곡물",
@@ -356,6 +414,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "34",
     name: "떡",
+    nameEn: "Rice Cake",
     currentPrice: 5000,
     unit: "500g",
     category: "곡물",
@@ -365,6 +424,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "35",
     name: "표고버섯",
+    nameEn: "Shiitake Mushroom",
     currentPrice: 4000,
     unit: "200g",
     category: "채소",
@@ -374,6 +434,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "36",
     name: "고사리",
+    nameEn: "Fernbrake",
     currentPrice: 6000,
     unit: "200g",
     category: "채소",
@@ -383,6 +444,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "37",
     name: "어묵",
+    nameEn: "Fish Cake",
     currentPrice: 3500,
     unit: "300g",
     category: "가공식품",
@@ -392,6 +454,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "38",
     name: "조개",
+    nameEn: "Clam",
     currentPrice: 7000,
     unit: "300g",
     category: "해산물",
@@ -401,6 +464,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "39",
     name: "미역",
+    nameEn: "Seaweed",
     currentPrice: 5000,
     unit: "100g",
     category: "해산물",
@@ -410,6 +474,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "40",
     name: "멸치",
+    nameEn: "Anchovy",
     currentPrice: 8000,
     unit: "200g",
     category: "해산물",
@@ -419,6 +484,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "41",
     name: "대추",
+    nameEn: "Jujube",
     currentPrice: 6000,
     unit: "200g",
     category: "과일",
@@ -428,6 +494,7 @@ const sampleIngredients: Ingredient[] = [
   {
     id: "42",
     name: "밤",
+    nameEn: "Chestnut",
     currentPrice: 8000,
     unit: "500g",
     category: "과일",
@@ -486,7 +553,10 @@ export default function IngredientsPage() {
                         <h3 className="font-semibold text-gray-900 dark:text-white">
                           {ingredient.name}
                         </h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          {ingredient.nameEn}
+                        </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">
                           {ingredient.unit}
                         </p>
                       </div>
@@ -534,6 +604,9 @@ export default function IngredientsPage() {
                       {selectedIngredient.name}
                     </h2>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {selectedIngredient.nameEn}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                       {selectedIngredient.unit} · {selectedIngredient.category}
                     </p>
                   </div>
@@ -671,6 +744,33 @@ export default function IngredientsPage() {
                   </p>
                 </div>
               </div>
+
+              {/* 단위 변환 정보 */}
+              {selectedIngredient.conversions && selectedIngredient.conversions.length > 0 && (
+                <div className="mt-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
+                  <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">
+                    단위 변환
+                  </h3>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {selectedIngredient.conversions.map((conversion, index) => (
+                      <div
+                        key={index}
+                        className="bg-white dark:bg-gray-800 rounded-lg p-3 text-center"
+                      >
+                        <p className="text-lg font-bold text-gray-900 dark:text-white">
+                          {conversion.amount}
+                        </p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400">
+                          {conversion.unit}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                    {selectedIngredient.unit}당 대략적인 개수
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
