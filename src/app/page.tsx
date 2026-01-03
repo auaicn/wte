@@ -38,11 +38,8 @@ export default function Home() {
       <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            음식 가계부 & 레시피 관리
+            WTE
           </h1>
-          <p className="text-gray-600 dark:text-gray-300">
-            재료 가격 관리, 레시피, 가계부 및 식사 계획을 한 곳에서
-          </p>
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
@@ -66,12 +63,6 @@ export default function Home() {
               </Link>
             );
           })}
-        </div>
-
-        <div className="mt-12 text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            각 카드를 클릭하여 해당 기능 페이지로 이동하세요
-          </p>
         </div>
       </div>
     </div>
