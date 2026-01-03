@@ -30,17 +30,25 @@ interface Ingredient {
 // 헬퍼 함수: 1달 가격 히스토리 생성
 function generatePriceHistory(
   startPrice: number,
-  endPrice: number
+  endPrice: number,
+  seed: number = 0
 ): PriceHistory[] {
   const history: PriceHistory[] = [];
   const days = 30;
   const priceChange = (endPrice - startPrice) / days;
 
+  // 고정된 날짜 사용 (2024년 12월 5일부터 2025년 1월 3일까지)
+  const baseDate = new Date(2024, 11, 5); // 12월 5일 (month는 0-based)
+
   for (let i = 0; i <= days; i += 3) {
-    const date = new Date();
-    date.setDate(date.getDate() - (30 - i));
-    const dateStr = `${date.getMonth() + 1}/${date.getDate()}`;
-    const price = Math.round(startPrice + priceChange * i + (Math.random() - 0.5) * 200);
+    const currentDate = new Date(baseDate);
+    currentDate.setDate(baseDate.getDate() + i);
+    const dateStr = `${currentDate.getMonth() + 1}/${currentDate.getDate()}`;
+
+    // 시드값을 사용한 결정론적 변동 (부드러운 변동)
+    const variation = Math.sin(seed + i) * 30;
+    const price = Math.round(startPrice + priceChange * i + variation);
+
     history.push({ date: dateStr, price });
   }
 
@@ -55,7 +63,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "1kg",
     category: "채소",
     priceChange: -5.2,
-    priceHistory: generatePriceHistory(2300, 2000),
+    priceHistory: generatePriceHistory(2300, 2000, 1),
   },
   {
     id: "2",
@@ -64,7 +72,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "1kg",
     category: "채소",
     priceChange: 6.7,
-    priceHistory: generatePriceHistory(3000, 3200),
+    priceHistory: generatePriceHistory(3000, 3200, 2),
   },
   {
     id: "3",
@@ -73,7 +81,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "1단",
     category: "채소",
     priceChange: -10.0,
-    priceHistory: generatePriceHistory(5000, 4500),
+    priceHistory: generatePriceHistory(5000, 4500, 3),
   },
   {
     id: "4",
@@ -82,7 +90,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "1kg",
     category: "채소",
     priceChange: 3.7,
-    priceHistory: generatePriceHistory(2700, 2800),
+    priceHistory: generatePriceHistory(2700, 2800, 4),
   },
   {
     id: "5",
@@ -91,7 +99,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "1개",
     category: "채소",
     priceChange: 2.9,
-    priceHistory: generatePriceHistory(3400, 3500),
+    priceHistory: generatePriceHistory(3400, 3500, 5),
   },
   {
     id: "6",
@@ -100,7 +108,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "1단",
     category: "채소",
     priceChange: -3.8,
-    priceHistory: generatePriceHistory(2600, 2500),
+    priceHistory: generatePriceHistory(2600, 2500, 6),
   },
   {
     id: "7",
@@ -109,7 +117,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "1봉",
     category: "채소",
     priceChange: 0,
-    priceHistory: generatePriceHistory(1500, 1500),
+    priceHistory: generatePriceHistory(1500, 1500, 7),
   },
   {
     id: "8",
@@ -118,7 +126,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "100g",
     category: "채소",
     priceChange: 15.4,
-    priceHistory: generatePriceHistory(2600, 3000),
+    priceHistory: generatePriceHistory(2600, 3000, 8),
   },
   {
     id: "9",
@@ -127,7 +135,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "1단",
     category: "채소",
     priceChange: -8.3,
-    priceHistory: generatePriceHistory(2400, 2200),
+    priceHistory: generatePriceHistory(2400, 2200, 9),
   },
   {
     id: "10",
@@ -136,7 +144,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "20장",
     category: "채소",
     priceChange: 0,
-    priceHistory: generatePriceHistory(3000, 3000),
+    priceHistory: generatePriceHistory(3000, 3000, 10),
   },
   {
     id: "11",
@@ -145,7 +153,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "10개",
     category: "유제품",
     priceChange: 0,
-    priceHistory: generatePriceHistory(5000, 5000),
+    priceHistory: generatePriceHistory(5000, 5000, 11),
   },
   {
     id: "12",
@@ -154,7 +162,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "1모",
     category: "유제품",
     priceChange: -2.4,
-    priceHistory: generatePriceHistory(2050, 2000),
+    priceHistory: generatePriceHistory(2050, 2000, 12),
   },
   {
     id: "13",
@@ -163,7 +171,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "1팩",
     category: "유제품",
     priceChange: 4.2,
-    priceHistory: generatePriceHistory(2400, 2500),
+    priceHistory: generatePriceHistory(2400, 2500, 13),
   },
   {
     id: "14",
@@ -172,7 +180,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500g",
     category: "육류",
     priceChange: 8.7,
-    priceHistory: generatePriceHistory(13800, 15000),
+    priceHistory: generatePriceHistory(13800, 15000, 14),
   },
   {
     id: "15",
@@ -181,7 +189,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500g",
     category: "육류",
     priceChange: 3.9,
-    priceHistory: generatePriceHistory(7700, 8000),
+    priceHistory: generatePriceHistory(7700, 8000, 15),
   },
   {
     id: "16",
@@ -190,7 +198,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500g",
     category: "육류",
     priceChange: 9.1,
-    priceHistory: generatePriceHistory(11000, 12000),
+    priceHistory: generatePriceHistory(11000, 12000, 16),
   },
   {
     id: "17",
@@ -199,7 +207,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500g",
     category: "육류",
     priceChange: 0,
-    priceHistory: generatePriceHistory(6000, 6000),
+    priceHistory: generatePriceHistory(6000, 6000, 17),
   },
   {
     id: "18",
@@ -208,7 +216,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500g",
     category: "육류",
     priceChange: 5.9,
-    priceHistory: generatePriceHistory(17000, 18000),
+    priceHistory: generatePriceHistory(17000, 18000, 18),
   },
   {
     id: "19",
@@ -217,7 +225,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "1kg",
     category: "반찬",
     priceChange: 0,
-    priceHistory: generatePriceHistory(8000, 8000),
+    priceHistory: generatePriceHistory(8000, 8000, 19),
   },
   {
     id: "20",
@@ -226,7 +234,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "10장",
     category: "반찬",
     priceChange: -5.0,
-    priceHistory: generatePriceHistory(3150, 3000),
+    priceHistory: generatePriceHistory(3150, 3000, 20),
   },
   {
     id: "21",
@@ -235,7 +243,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500ml",
     category: "조미료",
     priceChange: 0,
-    priceHistory: generatePriceHistory(5000, 5000),
+    priceHistory: generatePriceHistory(5000, 5000, 11),
   },
   {
     id: "22",
@@ -244,7 +252,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500g",
     category: "조미료",
     priceChange: 2.0,
-    priceHistory: generatePriceHistory(5900, 6000),
+    priceHistory: generatePriceHistory(5900, 6000, 22),
   },
   {
     id: "23",
@@ -253,7 +261,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500g",
     category: "조미료",
     priceChange: 1.9,
-    priceHistory: generatePriceHistory(5400, 5500),
+    priceHistory: generatePriceHistory(5400, 5500, 23),
   },
   {
     id: "24",
@@ -262,7 +270,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500g",
     category: "조미료",
     priceChange: 14.3,
-    priceHistory: generatePriceHistory(7000, 8000),
+    priceHistory: generatePriceHistory(7000, 8000, 24),
   },
   {
     id: "25",
@@ -271,7 +279,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "250ml",
     category: "조미료",
     priceChange: 0,
-    priceHistory: generatePriceHistory(7000, 7000),
+    priceHistory: generatePriceHistory(7000, 7000, 25),
   },
   {
     id: "26",
@@ -280,7 +288,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "1kg",
     category: "조미료",
     priceChange: 0,
-    priceHistory: generatePriceHistory(3000, 3000),
+    priceHistory: generatePriceHistory(3000, 3000, 10),
   },
   {
     id: "27",
@@ -289,7 +297,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500g",
     category: "조미료",
     priceChange: 11.1,
-    priceHistory: generatePriceHistory(3600, 4000),
+    priceHistory: generatePriceHistory(3600, 4000, 27),
   },
   {
     id: "28",
@@ -298,7 +306,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500g",
     category: "조미료",
     priceChange: -6.5,
-    priceHistory: generatePriceHistory(5350, 5000),
+    priceHistory: generatePriceHistory(5350, 5000, 28),
   },
   {
     id: "29",
@@ -307,7 +315,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500g",
     category: "조미료",
     priceChange: 0,
-    priceHistory: generatePriceHistory(4000, 4000),
+    priceHistory: generatePriceHistory(4000, 4000, 29),
   },
   {
     id: "30",
@@ -316,7 +324,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "300g",
     category: "조미료",
     priceChange: 0,
-    priceHistory: generatePriceHistory(5000, 5000),
+    priceHistory: generatePriceHistory(5000, 5000, 11),
   },
   {
     id: "31",
@@ -325,7 +333,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500ml",
     category: "조미료",
     priceChange: 0,
-    priceHistory: generatePriceHistory(4500, 4500),
+    priceHistory: generatePriceHistory(4500, 4500, 31),
   },
   {
     id: "32",
@@ -334,7 +342,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "5kg",
     category: "곡물",
     priceChange: 0,
-    priceHistory: generatePriceHistory(10000, 10000),
+    priceHistory: generatePriceHistory(10000, 10000, 32),
   },
   {
     id: "33",
@@ -343,7 +351,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500g",
     category: "곡물",
     priceChange: 0,
-    priceHistory: generatePriceHistory(3000, 3000),
+    priceHistory: generatePriceHistory(3000, 3000, 10),
   },
   {
     id: "34",
@@ -352,7 +360,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500g",
     category: "곡물",
     priceChange: 4.2,
-    priceHistory: generatePriceHistory(4800, 5000),
+    priceHistory: generatePriceHistory(4800, 5000, 34),
   },
   {
     id: "35",
@@ -361,7 +369,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "200g",
     category: "채소",
     priceChange: 0,
-    priceHistory: generatePriceHistory(4000, 4000),
+    priceHistory: generatePriceHistory(4000, 4000, 29),
   },
   {
     id: "36",
@@ -370,7 +378,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "200g",
     category: "채소",
     priceChange: 9.1,
-    priceHistory: generatePriceHistory(5500, 6000),
+    priceHistory: generatePriceHistory(5500, 6000, 36),
   },
   {
     id: "37",
@@ -379,7 +387,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "300g",
     category: "가공식품",
     priceChange: 0,
-    priceHistory: generatePriceHistory(3500, 3500),
+    priceHistory: generatePriceHistory(3500, 3500, 37),
   },
   {
     id: "38",
@@ -388,7 +396,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "300g",
     category: "해산물",
     priceChange: -4.1,
-    priceHistory: generatePriceHistory(7300, 7000),
+    priceHistory: generatePriceHistory(7300, 7000, 38),
   },
   {
     id: "39",
@@ -397,7 +405,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "100g",
     category: "해산물",
     priceChange: 0,
-    priceHistory: generatePriceHistory(5000, 5000),
+    priceHistory: generatePriceHistory(5000, 5000, 11),
   },
   {
     id: "40",
@@ -406,7 +414,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "200g",
     category: "해산물",
     priceChange: 0,
-    priceHistory: generatePriceHistory(8000, 8000),
+    priceHistory: generatePriceHistory(8000, 8000, 19),
   },
   {
     id: "41",
@@ -415,7 +423,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "200g",
     category: "과일",
     priceChange: 0,
-    priceHistory: generatePriceHistory(6000, 6000),
+    priceHistory: generatePriceHistory(6000, 6000, 17),
   },
   {
     id: "42",
@@ -424,7 +432,7 @@ const sampleIngredients: Ingredient[] = [
     unit: "500g",
     category: "과일",
     priceChange: -5.9,
-    priceHistory: generatePriceHistory(8500, 8000),
+    priceHistory: generatePriceHistory(8500, 8000, 42),
   },
 ];
 
